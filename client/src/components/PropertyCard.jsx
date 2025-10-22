@@ -1,6 +1,6 @@
 import {Button} from "@/components/ui/button";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
-const PropertyCard = ({property, key}) => {
+const PropertyCard = ({property, key, onDelete}) => {
   return (
     <div
       key={key}
@@ -28,6 +28,12 @@ const PropertyCard = ({property, key}) => {
             </p>
           </DialogContent>
         </Dialog>
+
+        <div>
+          <Button className="w-full" onClick={() => onDelete(property._id)}>
+            Delete
+          </Button>
+        </div>
       </div>
     </div>
   );

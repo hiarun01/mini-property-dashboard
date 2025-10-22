@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button";
 import PropertyCard from "./components/PropertyCard";
 import {useEffect, useState} from "react";
-import {createProperty, getProperties} from "./api/api";
+import {createProperty, deletePropertyById, getProperties} from "./api/api";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {
   Select,
@@ -51,6 +51,16 @@ function App() {
       console.error("Error adding property:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deletePropertyById(id);
+      toast.success("Property deleted successfully!");
+      setProperties((prev) => prev.filter((property) => property._id !== id)); // remove deleted property from state
+    } catch (error) {
+      console.error("Error deleting property:", error);
     }
   };
 
@@ -166,7 +176,11 @@ function App() {
       {/* card section  */}
       <div className="max-w-7xl mx-auto px-5 gap-5 mt-10 grid grid-cols-4 md:grid-cols-2 lg:grid-cols-3 py-15">
         {filteredProperties.map((property, index) => (
-          <PropertyCard key={index} property={property} />
+          <PropertyCard
+            key={index}
+            property={property}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
     </div>
