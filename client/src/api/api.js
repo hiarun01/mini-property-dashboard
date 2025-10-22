@@ -21,3 +21,9 @@ export const deletePropertyById = async (id) => {
   const response = await api.delete(`/delete/${id}`);
   return response.data;
 };
+
+// update a property by id
+export const updatePropertyById = async (id, propertyData) => {
+  const response = await api.put(`/update/${id}`, propertyData);
+  return response.data;
+};

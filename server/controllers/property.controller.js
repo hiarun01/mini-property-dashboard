@@ -47,3 +47,26 @@ export const deletePropertyById = async (req, res) => {
     return res.status(500).json({message: "Internal server error."});
   }
 };
+
+// update property by id
+export const updatePropertyById = async (req, res) => {
+  const {id} = req.params;
+  try {
+    const {name, description, type, location, price} = req.body;
+    const updatedProperty = await Property.findByIdAndUpdate(
+      id,
+      {name, description, type, location, price},
+      {new: true}
+    );
+
+    if (!updatedProperty) {
+      return res.status(404).json({message: "Property not found."});
+    }
+    return res.status(200).json({
+      message: "Property updated successfully.",
+      property: updatedProperty,
+    });
+  } catch (error) {
+    return res.status(500).json({message: "Internal server error."});
+  }
+};

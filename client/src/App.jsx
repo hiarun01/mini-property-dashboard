@@ -1,7 +1,12 @@
 import {Button} from "@/components/ui/button";
 import PropertyCard from "./components/PropertyCard";
 import {useEffect, useState} from "react";
-import {createProperty, deletePropertyById, getProperties} from "./api/api";
+import {
+  createProperty,
+  deletePropertyById,
+  getProperties,
+  updatePropertyById,
+} from "./api/api";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {
   Select,
@@ -76,7 +81,7 @@ function App() {
       }
     };
     fetchProperties();
-  }, []);
+  }, [properties]);
 
   return (
     <div className="">
