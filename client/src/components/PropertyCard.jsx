@@ -3,7 +3,8 @@ import {useState} from "react";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {toast} from "sonner";
 import {updatePropertyById} from "../api/api";
-const PropertyCard = ({property, key, onDelete}) => {
+
+const PropertyCard = ({property, key, onDelete, onUpdate}) => {
   const [formData, setFormData] = useState({
     name: property.name,
     description: property.description,
@@ -28,12 +29,15 @@ const PropertyCard = ({property, key, onDelete}) => {
     try {
       await updatePropertyById(property._id, formData);
       toast.success("Property updated successfully!");
+      // notify parent to refetch latest data
+      if (typeof onUpdate === "function") onUpdate();
     } catch (error) {
       console.error("Error updating property:", error);
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div
       key={key}
@@ -52,7 +56,7 @@ const PropertyCard = ({property, key, onDelete}) => {
           <DialogContent>
             <h2 className="text-xl font-semibold mb-2">{property.name}</h2>
             <p className="text-gray-800 font-medium">Type: {property.type}</p>
-            <p className="text-gray-600 mb-1">{property.description}</p>
+            <p className="text-gray-600 text-sm mb-1">{property.description}</p>
             <p className="text-gray-800 font-medium">
               Location: {property.location}
             </p>

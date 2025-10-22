@@ -24,8 +24,6 @@ function App() {
   });
   const [filter, setFilter] = useState("All");
 
-  console.log(formData);
-
   const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData((prevData) => ({
@@ -64,19 +62,20 @@ function App() {
     }
   };
 
-  // Fetch properties on component mount
+  // Fetch properties on component mount and expose as a function for child triggers
+  const fetchProperties = async () => {
+    try {
+      const data = await getProperties();
+      // set the properties from the API response
+      setProperties(data);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const data = await getProperties();
-        // set the properties from the API response
-        setProperties(data);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      }
-    };
     fetchProperties();
-  }, [properties]);
+  }, []);
 
   return (
     <div className="">
@@ -180,6 +179,7 @@ function App() {
             key={index}
             property={property}
             onDelete={handleDelete}
+            onUpdate={fetchProperties}
           />
         ))}
       </div>
