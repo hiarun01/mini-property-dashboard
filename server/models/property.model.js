@@ -11,7 +11,6 @@ const propertySchema = mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["Apartment", "House", "Plot", "Studio"],
     required: true,
   },
   location: {
