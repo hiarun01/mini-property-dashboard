@@ -62,7 +62,6 @@ function App() {
     }
   };
 
-  // Fetch properties on component mount and expose as a function for child triggers
   const fetchProperties = async () => {
     try {
       const data = await getProperties();
@@ -76,6 +75,16 @@ function App() {
   useEffect(() => {
     fetchProperties();
   }, []);
+
+  const loading = properties.length === 0;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-500 text-lg">Loading properties...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="">
@@ -172,7 +181,6 @@ function App() {
         </div>
       </div>
 
-      {/* card section  */}
       <div className="max-w-7xl mx-auto gap-5 mt-10 grid grid-cols-4 md:grid-cols-2 lg:grid-cols-3 py-15">
         {filteredProperties.map((property, index) => (
           <PropertyCard
@@ -182,6 +190,11 @@ function App() {
             onUpdate={fetchProperties}
           />
         ))}
+        {filteredProperties.length === 0 && (
+          <div className="col-span-4 flex justify-center items-center h-60">
+            <p className="text-gray-500 text-lg">No properties of this type.</p>
+          </div>
+        )}
       </div>
     </div>
   );
