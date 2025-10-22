@@ -81,8 +81,8 @@ function App() {
   return (
     <div className="">
       {/* header section */}
-      <div className="flex justify-center items-center h-15  max-w-7xl mx-auto px-5 py-4 fixed z-0 bg-white top-0 left-0 right-0 border-b">
-        <h1 className="text-lg font-bold">Property Dashboard</h1>
+      <div className="max-w-7xl mx-auto flex justify-center w-full items-center h-15  py-4 fixed z-0 bg-white top-0 left-0 right-0 border-b">
+        <h1 className="text-lg font-bold">Property Listing Dashboard</h1>
         <div className="ml-auto mr-5 flex items-center gap-4 md:">
           <Dialog>
             <DialogTrigger>
@@ -174,7 +174,7 @@ function App() {
       </div>
 
       {/* card section  */}
-      <div className="max-w-7xl mx-auto px-5 gap-5 mt-10 grid grid-cols-4 md:grid-cols-2 lg:grid-cols-3 py-15">
+      <div className="max-w-7xl mx-auto gap-5 mt-10 grid grid-cols-4 md:grid-cols-2 lg:grid-cols-3 py-15">
         {filteredProperties.map((property, index) => (
           <PropertyCard
             key={index}

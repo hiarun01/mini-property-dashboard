@@ -41,9 +41,9 @@ const PropertyCard = ({property, key, onDelete}) => {
     >
       <h2 className="text-xl font-semibold mb-2">{property.name}</h2>
       <p className="text-gray-800 font-medium">Type: {property.type}</p>
-      <p className="text-gray-600 mb-1">{property.description}</p>
-      <p className="text-gray-800 font-medium">Location: {property.location}</p>
-      <p className="text-gray-800 font-medium">Price: ₹{property.price}</p>
+      <p className="text-gray-600 mb-1">
+        {property.description.slice(0, 100)}...
+      </p>
       <div className="mt-2 flex gap-3">
         <Dialog>
           <DialogTrigger className="w-full">
