@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utils/db.js";
+import propertyRouter from "./routes/property.route.js";
 dotenv.config();
 
 const app = express();
@@ -11,11 +12,11 @@ app.use(
     origin: "http://localhost:5173",
   })
 );
-app.use(express.json()); // Parse JSON bodies
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
+// apis
+
+app.use("/api/v1", propertyRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
