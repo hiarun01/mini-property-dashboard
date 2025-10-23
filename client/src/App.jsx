@@ -23,7 +23,9 @@ function App() {
     price: "",
   });
   const [filter, setFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
+  // onChange handler for form inputs
   const handleChange = (e) => {
     const {name, value} = e.target;
     setFormData((prevData) => ({
@@ -32,11 +34,19 @@ function App() {
     }));
   };
 
-  // Filter properties by type
-  const filteredProperties =
-    filter === "All"
-      ? properties
-      : properties.filter((property) => property.type === filter);
+  // Filter properties by type and search query
+  const filteredAndSearchedProperties = properties.filter((property) => {
+    const filterMatches = filter === "All" ? true : property.type === filter;
+
+    // Search query matching
+    const q = searchQuery.trim().toLowerCase();
+    const matchesSearch =
+      q === "" ||
+      (property.name && property.name.toLowerCase().includes(q)) ||
+      (property.location && property.location.toLowerCase().includes(q));
+
+    return filterMatches && matchesSearch; //
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,12 +89,38 @@ function App() {
   const loading = properties.length === 0;
 
   return (
-    <div className="">
+    <div>
       {/* header section */}
-      <div className="flex items-center border-b py-6 px-5 lg:px-0 max-w-7xl md:flex-row mx-auto flex-col gap-5 ">
+      <div className="flex items-center py-5 px-5 lg:px-0 max-w-7xl md:flex-row mx-auto flex-col gap-5 ">
         <h1 className="text-lg font-bold">Property Listing Dashboard</h1>
         {/* Header buttons */}
         <div className="ml-auto mr-5 flex items-center gap-4 md:">
+          {/* Search Bar */}
+          <div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by name or location"
+              className="border rounded px-3 py-1"
+            />
+          </div>
+          {/* Filter Select */}
+          <div>
+            <Select value={filter} onValueChange={setFilter}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter By Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All">All</SelectItem>
+                <SelectItem value="Studio">Studio</SelectItem>
+                <SelectItem value="Apartment">Apartment</SelectItem>
+                <SelectItem value="House">House</SelectItem>
+                <SelectItem value="Plot">Plot</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {/* Add Property Dialog */}
           <Dialog>
             <DialogTrigger>
               <Button className="w-full">Add Property</Button>
@@ -156,31 +192,16 @@ function App() {
               </form>
             </DialogContent>
           </Dialog>
-
-          <div>
-            <Select value={filter} onValueChange={setFilter}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter By Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All</SelectItem>
-                <SelectItem value="Studio">Studio</SelectItem>
-                <SelectItem value="Apartment">Apartment</SelectItem>
-                <SelectItem value="House">House</SelectItem>
-                <SelectItem value="Plot">Plot</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
       </div>
 
       {loading && (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-60">
           <p className="text-gray-500 text-lg">Loading properties...</p>
         </div>
       )}
       <div className="max-w-7xl px-5 mx-auto gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-15">
-        {filteredProperties.map((property, index) => (
+        {filteredAndSearchedProperties.map((property, index) => (
           <PropertyCard
             key={index}
             property={property}
@@ -188,9 +209,9 @@ function App() {
             onUpdate={fetchProperties}
           />
         ))}
-        {filteredProperties.length === 0 && (
+        {filteredAndSearchedProperties.length === 0 && (
           <div className="col-span-4 flex justify-center items-center h-60">
-            <p className="text-gray-500 text-lg">No properties of this type.</p>
+            <p className="text-gray-500 text-lg">No properties found.</p>
           </div>
         )}
       </div>
