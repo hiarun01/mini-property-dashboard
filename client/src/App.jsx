@@ -56,6 +56,13 @@ function App() {
       toast.success("Property added successfully!");
       setProperties((prev) => [...prev, newProperty]);
       fetchProperties(); // refetch properties to get the latest list
+      setFormData({
+        name: "",
+        description: "",
+        type: "",
+        location: "",
+        price: "",
+      });
     } catch (error) {
       console.error("Error adding property:", error);
     } finally {
