@@ -44,10 +44,8 @@ const PropertyCard = ({property, key, onDelete, onUpdate}) => {
       className="border p-5 rounded-lg shadow-md col-span-5 md:col-span-2 lg:col-span-1"
     >
       <h2 className="text-xl font-semibold mb-2">{property.name}</h2>
-      <p className="text-gray-800 font-medium">Type: {property.type}</p>
-      <p className="text-gray-600 mb-1">
-        {property.description.slice(0, 100)}...
-      </p>
+      <p className="text-gray-800 font-medium mb-2">Type: {property.type}</p>
+      <p className="text-gray-600 mb-1">{property.description}</p>
       <div className="mt-2 flex gap-3">
         <Dialog>
           <DialogTrigger className="w-full">

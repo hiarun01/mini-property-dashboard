@@ -55,6 +55,7 @@ function App() {
       const newProperty = await createProperty(formData);
       toast.success("Property added successfully!");
       setProperties((prev) => [...prev, newProperty]);
+      fetchProperties(); // refetch properties to get the latest list
     } catch (error) {
       console.error("Error adding property:", error);
     } finally {
@@ -89,12 +90,12 @@ function App() {
   const loading = properties.length === 0;
 
   return (
-    <div>
+    <div className="min-h-screen px-5">
       {/* header section */}
-      <div className="flex items-center py-5 px-5 lg:px-0 max-w-7xl md:flex-row mx-auto flex-col gap-5 ">
+      <div className="flex items-center py-5 lg:px-0 max-w-7xl md:flex-row mx-auto flex-col gap-7 border-b rounded-md pb-5">
         <h1 className="text-lg font-bold">Property Listing Dashboard</h1>
         {/* Header buttons */}
-        <div className="ml-auto mr-5 flex items-center gap-4 md:">
+        <div className="ml-auto mr-5 flex justify-center items-center gap-4 flex-wrap">
           {/* Search Bar */}
           <div>
             <input
@@ -200,7 +201,7 @@ function App() {
           <p className="text-gray-500 text-lg">Loading properties...</p>
         </div>
       )}
-      <div className="max-w-7xl px-5 mx-auto gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-15">
+      <div className="max-w-7xl mx-auto gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-10">
         {filteredAndSearchedProperties.map((property, index) => (
           <PropertyCard
             key={index}
@@ -209,11 +210,6 @@ function App() {
             onUpdate={fetchProperties}
           />
         ))}
-        {filteredAndSearchedProperties.length === 0 && (
-          <div className="col-span-4 flex justify-center items-center h-60">
-            <p className="text-gray-500 text-lg">No properties found.</p>
-          </div>
-        )}
       </div>
     </div>
   );
