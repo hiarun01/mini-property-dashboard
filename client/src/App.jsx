@@ -92,7 +92,7 @@ function App() {
   return (
     <div className="min-h-screen px-5">
       {/* header section */}
-      <div className="flex items-center py-5 lg:px-0 max-w-7xl md:flex-row mx-auto flex-col gap-7 border-b rounded-md pb-5">
+      <div className="flex items-center py-5 lg:px-0 max-w-7xl md:flex-row mx-auto flex-col gap-7 border-b rounded-md pb-5 fixed z-0 bg-white w-full left-0 right-0">
         <h1 className="text-lg font-bold">Property Listing Dashboard</h1>
         {/* Header buttons */}
         <div className="ml-auto mr-5 flex justify-center items-center gap-4 flex-wrap">
@@ -201,7 +201,7 @@ function App() {
           <p className="text-gray-500 text-lg">Loading properties...</p>
         </div>
       )}
-      <div className="max-w-7xl mx-auto gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-10">
+      <div className="max-w-7xl lg:py-25 py-50 mx-auto gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
         {filteredAndSearchedProperties.map((property, index) => (
           <PropertyCard
             key={index}
