@@ -78,23 +78,16 @@ function App() {
 
   const loading = properties.length === 0;
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-500 text-lg">Loading properties...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="">
       {/* header section */}
-      <div className="max-w-7xl mx-auto flex justify-center w-full items-center h-15  py-4 fixed z-0 bg-white top-0 left-0 right-0 border-b">
+      <div className="flex items-center border-b py-6 px-5 lg:px-0 max-w-7xl md:flex-row mx-auto flex-col gap-5 ">
         <h1 className="text-lg font-bold">Property Listing Dashboard</h1>
+        {/* Header buttons */}
         <div className="ml-auto mr-5 flex items-center gap-4 md:">
           <Dialog>
             <DialogTrigger>
-              <Button className="w-full">Add</Button>
+              <Button className="w-full">Add Property</Button>
             </DialogTrigger>
             <DialogContent>
               <form className="p-5" onSubmit={handleSubmit}>
@@ -181,7 +174,12 @@ function App() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto gap-5 mt-10 grid grid-cols-4 md:grid-cols-2 lg:grid-cols-3 py-15">
+      {loading && (
+        <div className="flex justify-center items-center h-screen">
+          <p className="text-gray-500 text-lg">Loading properties...</p>
+        </div>
+      )}
+      <div className="max-w-7xl px-5 mx-auto gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-15">
         {filteredProperties.map((property, index) => (
           <PropertyCard
             key={index}
